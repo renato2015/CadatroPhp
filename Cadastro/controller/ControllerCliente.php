@@ -1,7 +1,7 @@
 <?php
 
-require_once '../model/BeanCliente.php';
-require_once '../dao/DaoCliente.php';
+require_once 'model/BeanCliente.php';
+require_once 'dao/DaoCliente.php';
 
 /**
  * Description of ControllerCliente

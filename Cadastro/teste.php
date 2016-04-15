@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <link href="resources/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+        <script src="resources/js/bootstrap.min.js" type="text/javascript"></script>
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
         <script type="text/javascript">
             $('input[type=submit]').click(function (e) {
@@ -34,30 +36,47 @@
     </head>
     <body>
         <form id="form" method="post">
-            <label>Nome:
-                <input type="text" name="nome" placeholder="Nome:" autofocus required />
-            </label>
-            <label>E-mail:
-                <input type="email" name="email" placeholder="E-mail:" required />
-            </label>
-            <label>Telefone:
-                <input type="tel" name="telefone" placeholder="Telefone:" required />
-            </label>
-            <input type="submit" value="Enviar">
+            <div class="form-group">
+                <label>Nome:</label>
+                <input type="text" class="form-control" name="nome" placeholder="Nome:" autofocus required />
+            </div>
+            <div class="form-group">
+                <label>E-mail:</label>
+                <input type="email" class="form-control" name="email" placeholder="E-mail:"  />
+            </div>
+            <div class="form-group">
+                <label>Telefone:</label>
+                <input type="tel" class="form-control" name="telefone" placeholder="Telefone:"  />
+            </div>
+
+            <input type="submit" class="btn-sm btn-success" name="gravar" value="Gravar"/>
+            <input type="submit" class="btn-sm btn-info" name="alterar" value="Alterar"/>
+            <input type="submit" class="btn-sm btn-danger" name="excluir" value="Excluir"/>
+            <input type="submit" class="btn-sm btn-default" name="limpar" value="Limpar"/>
         </form>
 
         <?php
+        include_once './model/BeanCliente.php';
+        include_once './controller/ControllerCliente.php';
 
-        if(isset($_POST['nome'])){
-            require_once './model/BeanCliente.php';
-        require_once './controller/ControllerCliente.php';
-        
+        if (isset($_POST['nome'])) {
             $beanCliente = new BeanCliente();
             $controllerCliente = new ControllerCliente();
 
+            echo $beanCliente->getNome();
             $beanCliente->setNome($_POST['nome']);
             $beanCliente->setEmail($_POST['email']);
             $beanCliente->setTelefone($_POST['telefone']);
+
+            if (isset($_POST['gravar'])) {
+                echo 'Gravar : ' . $beanCliente->getNome();
+            } elseif ($_POST['alterar']) {
+                echo 'Alterar : ' . $beanCliente->getNome();
+            } elseif ($_POST['limpar']) {
+                echo 'Limpar : ' . $beanCliente->getNome();
+            }
+
+
 
             $controllerCliente->inserir($beanCliente);
         }
